@@ -20,6 +20,7 @@ import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Drawer from "@material-ui/core/Drawer";
@@ -31,14 +32,20 @@ import Icon from "@material-ui/core/Icon";
 // core components
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.jsx";
 import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.jsx";
-
+import Collapse from "@material-ui/core/Collapse";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import Nested from "NestedList";
 import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle.jsx";
 
 const Sidebar = ({ ...props }) => {
   // verifies if routeName is the one active (in browser input)
+
   function activeRoute(routeName) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
+
   const { classes, color, logo, image, logoText, routes } = props;
   var links = (
     <List className={classes.list}>
@@ -81,6 +88,7 @@ const Sidebar = ({ ...props }) => {
                   })}
                 />
               )}
+
               <ListItemText
                 primary={props.rtlActive ? prop.rtlName : prop.name}
                 className={classNames(classes.itemText, whiteFontClasses, {
@@ -89,6 +97,10 @@ const Sidebar = ({ ...props }) => {
                 disableTypography={true}
               />
             </ListItem>
+
+            <Nested
+              primary={(props.toggleCollapse = true ? prop.rtlName : prop.name)}
+            />
           </NavLink>
         );
       })}
@@ -175,7 +187,7 @@ Sidebar.propTypes = {
   logoText: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object),
   open: PropTypes.bool,
-  collapse: PropTypes.collapse
+  toggleCollapse: PropTypes.bool
 };
 
 export default withStyles(sidebarStyle)(Sidebar);

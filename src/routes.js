@@ -44,7 +44,8 @@ const dashboardRoutes = [
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin"
+    layout: "/admin",
+    toggleCollapse: true
   },
   {
     path: "collapse",
@@ -52,7 +53,6 @@ const dashboardRoutes = [
     rtlName: "ملف تعريفي للمستخدم",
     icon: BubbleChart,
     component: UserProfile,
-
     layout: "/admin"
   },
   {
