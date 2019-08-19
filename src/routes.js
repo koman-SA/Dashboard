@@ -44,12 +44,11 @@ const dashboardRoutes = [
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin",
-    toggleCollapse: true
+    layout: "/admin"
   },
   {
-    path: "collapse",
-    name: "Environment",
+    path: "/UserProfile",
+    name: "User Profile",
     rtlName: "ملف تعريفي للمستخدم",
     icon: BubbleChart,
     component: UserProfile,
@@ -57,7 +56,7 @@ const dashboardRoutes = [
   },
   {
     path: "/table",
-    name: "Monitor",
+    name: "TableList",
     rtlName: "قائمة الجدول",
     icon: "Network",
     component: TableList,
@@ -65,7 +64,7 @@ const dashboardRoutes = [
   },
   {
     path: "/typography",
-    name: "Administration",
+    name: "Typography",
     rtlName: "طباعة",
     icon: LibraryBooks,
     component: Typography,
@@ -73,7 +72,7 @@ const dashboardRoutes = [
   },
   {
     path: "/icons",
-    name: "Backup",
+    name: "Icons",
     rtlName: "الرموز",
     icon: Backup,
     component: Icons,
@@ -81,7 +80,7 @@ const dashboardRoutes = [
   },
   {
     path: "/Maps",
-    name: "Secure",
+    name: "Maps",
     rtlName: "خرائط",
     icon: LocationOn,
     component: Maps,
@@ -89,7 +88,7 @@ const dashboardRoutes = [
   },
   {
     path: "/notifications",
-    name: "Advanced",
+    name: "Notifications",
     rtlName: "إخطارات",
     icon: Notifications,
     component: NotificationsPage,

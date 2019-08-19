@@ -32,11 +32,6 @@ import Icon from "@material-ui/core/Icon";
 // core components
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.jsx";
 import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.jsx";
-import Collapse from "@material-ui/core/Collapse";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import Nested from "NestedList";
 import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle.jsx";
 
 const Sidebar = ({ ...props }) => {
@@ -97,10 +92,6 @@ const Sidebar = ({ ...props }) => {
                 disableTypography={true}
               />
             </ListItem>
-
-            <Nested
-              primary={(props.toggleCollapse = true ? prop.rtlName : prop.name)}
-            />
           </NavLink>
         );
       })}
@@ -186,8 +177,7 @@ Sidebar.propTypes = {
   image: PropTypes.string,
   logoText: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object),
-  open: PropTypes.bool,
-  toggleCollapse: PropTypes.bool
+  open: PropTypes.bool
 };
 
 export default withStyles(sidebarStyle)(Sidebar);
