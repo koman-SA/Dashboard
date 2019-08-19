@@ -63,8 +63,7 @@ class Dashboard extends React.Component {
     color: "blue",
     hasImage: true,
     fixedClasses: "dropdown show",
-    mobileOpen: false,
-    subRoutes: false
+    mobileOpen: false
   };
   mainPanel = React.createRef();
   handleImageClick = image => {
@@ -125,7 +124,6 @@ class Dashboard extends React.Component {
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
           color={this.state.color}
-          subRoutesOpen={this.state.subRoutesOpen}
           {...rest}
         />
 

@@ -50,7 +50,68 @@ const Sidebar = ({ ...props }) => {
     setOpen(!open);
   }
 
-  const { classes, color, logo, image, logoText, routes, subRoutes } = props;
+  const { classes, color, logo, image, logoText, routes } = props;
+  function renderRoutes(
+    routes,
+    prop,
+    key,
+    activePro,
+    listItemClasses,
+    whiteFontClasses
+  ) {
+    <NavLink
+      to={prop.layout + prop.path}
+      className={activePro + classes.item}
+      activeClassName="active"
+      key={key}
+    >
+      <ListItem
+        button
+        onClick={handleClick}
+        className={classes.itemLink + listItemClasses}
+      >
+        {typeof prop.icon === "string" ? (
+          <Icon
+            className={classNames(classes.itemIcon, whiteFontClasses, {
+              [classes.itemIconRTL]: props.rtlActive
+            })}
+          >
+            {prop.icon}
+          </Icon>
+        ) : (
+          <prop.icon
+            className={classNames(classes.itemIcon, whiteFontClasses, {
+              [classes.itemIconRTL]: props.rtlActive
+            })}
+          />
+        )}
+
+        <ListItemText
+          primary={props.rtlActive ? prop.rtlName : prop.name}
+          className={classNames(classes.itemText, whiteFontClasses, {
+            [classes.itemTextRTL]: props.rtlActive
+          })}
+          disableTypography={true}
+        />
+      </ListItem>
+
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        {routes.subRoutes ? (
+          renderRoutes(
+            routes.subRoutes,
+            prop,
+            key,
+            activePro,
+            listItemClasses,
+            whiteFontClasses
+          )
+        ) : (
+          <div></div>
+        )}
+      </Collapse>
+    </NavLink>;
+  }
+
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
@@ -71,8 +132,15 @@ const Sidebar = ({ ...props }) => {
           [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path)
         });
 
-        return (
-          <NavLink
+        return renderRoutes(
+          routes,
+          prop,
+          key,
+          activePro,
+          listItemClasses,
+          whiteFontClasses
+        );
+        /*<NavLink
             to={prop.layout + prop.path}
             className={activePro + classes.item}
             activeClassName="active"
@@ -121,7 +189,7 @@ const Sidebar = ({ ...props }) => {
               </List>
             </Collapse>
           </NavLink>
-        );
+        );*/
       })}
     </List>
   );
