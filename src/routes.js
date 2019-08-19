@@ -24,6 +24,7 @@ import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
 import Language from "@material-ui/icons/Language";
 import Backup from "@material-ui/icons/Backup";
+import Nested from "NestedList";
 
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
@@ -44,16 +45,25 @@ const dashboardRoutes = [
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin",
-    toggleCollapse: true
+    layout: "/admin"
   },
   {
-    path: "collapse",
+    path: "",
     name: "Environment",
     rtlName: "ملف تعريفي للمستخدم",
     icon: BubbleChart,
     component: UserProfile,
-    layout: "/admin"
+    layout: "/admin",
+    subRoutes: [
+      {
+        path: "/dashboard",
+        name: "sub1",
+        rtlName: "لوحة القيادة",
+        icon: Dashboard,
+        component: DashboardPage,
+        layout: "/admin"
+      }
+    ]
   },
   {
     path: "/table",

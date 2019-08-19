@@ -64,7 +64,7 @@ class Dashboard extends React.Component {
     hasImage: true,
     fixedClasses: "dropdown show",
     mobileOpen: false,
-    toggleCollapse: false
+    subRoutes: false
   };
   mainPanel = React.createRef();
   handleImageClick = image => {
@@ -80,6 +80,7 @@ class Dashboard extends React.Component {
       this.setState({ fixedClasses: "dropdown" });
     }
   };
+
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
@@ -91,11 +92,7 @@ class Dashboard extends React.Component {
       this.setState({ mobileOpen: false });
     }
   };
-  toggleCollapse = () => {
-    if ((routes.toggleCollapse = true)) {
-      this.setState({ toggleCollapse: true });
-    }
-  };
+
   componentDidMount() {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(this.mainPanel.current);
@@ -128,7 +125,7 @@ class Dashboard extends React.Component {
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
           color={this.state.color}
-          toggleCollapse={this.state.toggleCollapse}
+          subRoutesOpen={this.state.subRoutesOpen}
           {...rest}
         />
 

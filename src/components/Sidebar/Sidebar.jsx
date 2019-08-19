@@ -41,17 +41,22 @@ import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebar
 
 const Sidebar = ({ ...props }) => {
   // verifies if routeName is the one active (in browser input)
-
+  const [open, setOpen] = React.useState(false);
   function activeRoute(routeName) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
 
-  const { classes, color, logo, image, logoText, routes } = props;
+  function handleClick() {
+    setOpen(!open);
+  }
+
+  const { classes, color, logo, image, logoText, routes, subRoutes } = props;
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
         var activePro = " ";
         var listItemClasses;
+
         if (prop.path === "/upgrade-to-pro") {
           activePro = classes.activePro + " ";
           listItemClasses = classNames({
@@ -65,6 +70,7 @@ const Sidebar = ({ ...props }) => {
         const whiteFontClasses = classNames({
           [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path)
         });
+
         return (
           <NavLink
             to={prop.layout + prop.path}
@@ -72,7 +78,11 @@ const Sidebar = ({ ...props }) => {
             activeClassName="active"
             key={key}
           >
-            <ListItem button className={classes.itemLink + listItemClasses}>
+            <ListItem
+              button
+              onClick={handleClick}
+              className={classes.itemLink + listItemClasses}
+            >
               {typeof prop.icon === "string" ? (
                 <Icon
                   className={classNames(classes.itemIcon, whiteFontClasses, {
@@ -98,9 +108,18 @@ const Sidebar = ({ ...props }) => {
               />
             </ListItem>
 
-            <Nested
-              primary={(props.toggleCollapse = true ? prop.rtlName : prop.name)}
-            />
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <List>
+                <ListItem button>
+                  <ListItemText
+                    primary={routes.subRoutes}
+                    className={classNames(routes.subRoutes, whiteFontClasses, {
+                      [classes.itemTextRTL]: props.rtlActive
+                    })}
+                  />
+                </ListItem>
+              </List>
+            </Collapse>
           </NavLink>
         );
       })}
@@ -186,8 +205,7 @@ Sidebar.propTypes = {
   image: PropTypes.string,
   logoText: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object),
-  open: PropTypes.bool,
-  toggleCollapse: PropTypes.bool
+  open: PropTypes.bool
 };
 
 export default withStyles(sidebarStyle)(Sidebar);
