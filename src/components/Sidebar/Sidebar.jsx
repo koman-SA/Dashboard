@@ -49,6 +49,13 @@ const Sidebar = ({ ...props }) => {
 
   const { classes, color, logo, image, logoText, routes } = props;
 
+  function renderSubRoutes(name, classes, color, routes) {
+    console.log(`Found subroutes on ${name}!`);
+    return (
+      renderRoutes(classes, color, routes)
+    );
+  }
+
   function renderRoutes(classes, color, routes) {
     return(
       <List className={classes.list}>
@@ -100,12 +107,8 @@ const Sidebar = ({ ...props }) => {
               />
             </ListItem>
             {prop.subroutes ? 
-              console.log(`Found subroutes on ${prop.name}!`) : 
+              renderSubRoutes(prop.name, classes, color, prop.subroutes) : 
               console.log(`No subroutes on ${prop.name}!`)
-            }
-            {prop.subroutes ? 
-              renderRoutes(classes, color, prop.subroutes) : 
-              <div/>
             }
           </NavLink>
       );
@@ -195,8 +198,7 @@ Sidebar.propTypes = {
   image: PropTypes.string,
   logoText: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object),
-  open: PropTypes.bool,
-  toggleCollapse: PropTypes.bool
+  open: PropTypes.bool
 };
 
 export default withStyles(sidebarStyle)(Sidebar);
