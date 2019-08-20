@@ -46,9 +46,12 @@ const Sidebar = ({ ...props }) => {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
 
+
   const { classes, color, logo, image, logoText, routes } = props;
-  var links = (
-    <List className={classes.list}>
+
+  function renderRoutes(classes, color, routes) {
+    return(
+      <List className={classes.list}>
       {routes.map((prop, key) => {
         var activePro = " ";
         var listItemClasses;
@@ -88,7 +91,6 @@ const Sidebar = ({ ...props }) => {
                   })}
                 />
               )}
-
               <ListItemText
                 primary={props.rtlActive ? prop.rtlName : prop.name}
                 className={classNames(classes.itemText, whiteFontClasses, {
@@ -97,15 +99,22 @@ const Sidebar = ({ ...props }) => {
                 disableTypography={true}
               />
             </ListItem>
-
-            <Nested
-              primary={(props.toggleCollapse = true ? prop.rtlName : prop.name)}
-            />
+            {prop.subroutes ? 
+              console.log(`Found subroutes on ${prop.name}!`) : 
+              console.log(`No subroutes on ${prop.name}!`)
+            }
+            {prop.subroutes ? 
+              renderRoutes(classes, color, prop.subroutes) : 
+              <div/>
+            }
           </NavLink>
-        );
-      })}
-    </List>
-  );
+      );
+    })}
+  </List>);
+  }
+
+  var links = renderRoutes(classes, color, routes);
+
   var brand = (
     <div className={classes.logo}>
       <a

@@ -25,44 +25,55 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function NestedList() {
-  const [open, setOpen] = React.useState(false);
-
-  function handleClick() {
-    setOpen(!open);
+export default class NestedList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      routes: props.routes
+    };
   }
 
-  return (
-    <List>
-      <ListItem button>
-        <ListItemIcon>
-          <SendIcon />
-        </ListItemIcon>
-        <ListItemText primary="Sent mail" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <DraftsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Drafts" />
-      </ListItem>
-      <ListItem button onClick={handleClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Inbox" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem button>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Starred" />
-          </ListItem>
-        </List>
-      </Collapse>
-    </List>
-  );
+  handleClick() {
+    this.setState({
+      open: !this.state.open,
+      routes: this.state.routes
+    });
+  }
+
+  render() {
+    return (
+      <List>
+        <ListItem button>
+          <ListItemIcon>
+            <SendIcon />
+          </ListItemIcon>
+          <ListItemText primary="Sent mail" />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <DraftsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Drafts" />
+        </ListItem>
+        <ListItem button onClick={this.handleClick.bind(this)}>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Inbox" />
+          {this.state.open ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItem button>
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText primary="Starred" />
+            </ListItem>
+          </List>
+        </Collapse>
+      </List>
+    );
+  }
 }

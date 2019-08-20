@@ -45,10 +45,35 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: DashboardPage,
     layout: "/admin",
-    toggleCollapse: true
+    subroutes: [
+      {
+        path: "/dashboard",
+        name: "sub1",
+        rtlName: "لوحة القيادة",
+        icon: Dashboard,
+        component: DashboardPage,
+        layout: "/admin"
+      },
+      {
+        path: "/collapse",
+        name: "sub2",
+        rtlName: "ملف تعريفي للمستخدم",
+        icon: BubbleChart,
+        component: UserProfile,
+        layout: "/admin"
+      },
+      {
+        path: "/table",
+        name: "sub3",
+        rtlName: "قائمة الجدول",
+        icon: "Network",
+        component: TableList,
+        layout: "/admin"
+      },
+    ]
   },
   {
-    path: "collapse",
+    path: "/collapse",
     name: "Environment",
     rtlName: "ملف تعريفي للمستخدم",
     icon: BubbleChart,
