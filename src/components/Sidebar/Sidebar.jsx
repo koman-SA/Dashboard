@@ -36,7 +36,7 @@ import Collapse from "@material-ui/core/Collapse";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import Nested from "NestedList";
+import NestedList from "NestedList";
 import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle.jsx";
 
 const Sidebar = ({ ...props }) => {
@@ -46,14 +46,76 @@ const Sidebar = ({ ...props }) => {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
 
-
   const { classes, color, logo, image, logoText, routes } = props;
+  var open = false;
+  function handleClick(e){
+    console.log(`SubMenu is ${open? 'open': 'closed'}`);
+    console.log(e);
+    open = !open;
+  }
 
   function renderSubRoutes(name, classes, color, routes) {
     console.log(`Found subroutes on ${name}!`);
-    return (
-      renderRoutes(classes, color, routes)
-    );
+      return (
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List className={classes.list}>
+            {routes.map((prop, key) => {
+              var activePro = " ";
+              var listItemClasses;
+              if (prop.path === "/upgrade-to-pro") {
+                activePro = classes.activePro + " ";
+                listItemClasses = classNames({
+                  [" " + classes[color]]: true
+                });
+              } else {
+                listItemClasses = classNames({
+                  [" " + classes[color]]: activeRoute(prop.layout + prop.path)
+                });
+              }
+              const whiteFontClasses = classNames({
+                [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path)
+              });
+              return (
+                <NavLink
+                  to={prop.layout + prop.path}
+                  className={activePro + classes.item}
+                  activeClassName="active"
+                  key={key}
+                >
+                  <ListItem button className={classes.itemLink + listItemClasses}>
+                    {typeof prop.icon === "string" ? (
+                      <Icon
+                        className={classNames(
+                          classes.itemIcon,
+                          whiteFontClasses,
+                          { [classes.itemIconRTL]: false }
+                        )}
+                      >
+                        {prop.icon}
+                      </Icon>
+                    ) : (
+                      <prop.icon
+                        className={classNames(
+                          classes.itemIcon,
+                          whiteFontClasses,
+                          { [classes.itemIconRTL]: false }
+                        )}
+                      />
+                    )}
+                    <ListItemText
+                      primary={prop.name}
+                      className={classNames(classes.itemText, whiteFontClasses, {
+                        [classes.itemTextRTL]: false
+                      })}
+                      disableTypography={true}
+                    />
+                  </ListItem>
+                </NavLink>
+              );
+            })}
+          </List>
+        </Collapse>
+      );
   }
 
   function renderRoutes(classes, color, routes) {
@@ -76,13 +138,14 @@ const Sidebar = ({ ...props }) => {
           [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path)
         });
         return (
-          <NavLink
-            to={prop.layout + prop.path}
-            className={activePro + classes.item}
-            activeClassName="active"
-            key={key}
-          >
-            <ListItem button className={classes.itemLink + listItemClasses}>
+          // <NavLink
+          //   to={prop.layout + prop.path}
+          //   className={activePro + classes.item}
+          //   activeClassName="active"
+          //   key={key}
+          // >
+          <div>
+            <ListItem button className={classes.itemLink + listItemClasses} onClick={handleClick}>
               {typeof prop.icon === "string" ? (
                 <Icon
                   className={classNames(classes.itemIcon, whiteFontClasses, {
@@ -96,7 +159,7 @@ const Sidebar = ({ ...props }) => {
                   className={classNames(classes.itemIcon, whiteFontClasses, {
                     [classes.itemIconRTL]: props.rtlActive
                   })}
-                />
+                  />
               )}
               <ListItemText
                 primary={props.rtlActive ? prop.rtlName : prop.name}
@@ -105,12 +168,16 @@ const Sidebar = ({ ...props }) => {
                 })}
                 disableTypography={true}
               />
+              
+              {prop.subroutes ? 
+                renderSubRoutes(prop.name, classes, color, prop.subroutes) : 
+                console.log(`No subroutes on ${prop.name}!`)
+              }
             </ListItem>
-            {prop.subroutes ? 
-              renderSubRoutes(prop.name, classes, color, prop.subroutes) : 
-              console.log(`No subroutes on ${prop.name}!`)
-            }
-          </NavLink>
+            
+          {/* </NavLink> */}
+          {prop.subroutes ? (open ? <ExpandLess /> : <ExpandMore />) : <div/>}
+          </div>
       );
     })}
   </List>);
