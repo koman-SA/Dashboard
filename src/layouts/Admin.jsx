@@ -28,8 +28,6 @@ import Navbar from "components/Navbars/Navbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
-import Nested from "NestedList";
-import HandleClick from "NestedList";
 import routes from "routes.js";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
@@ -91,11 +89,11 @@ class Dashboard extends React.Component {
       this.setState({ mobileOpen: false });
     }
   };
-  toggleCollapse = () => {
-    if ((routes.toggleCollapse = true)) {
-      this.setState({ toggleCollapse: true });
-    }
-  };
+  // toggleCollapse = () => {
+  //   if ((routes.toggleCollapse = true)) {
+  //     this.setState({ toggleCollapse: true });
+  //   }
+  // };
   componentDidMount() {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(this.mainPanel.current);
@@ -128,7 +126,7 @@ class Dashboard extends React.Component {
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
           color={this.state.color}
-          toggleCollapse={this.state.toggleCollapse}
+          collapsed={this.state.collapsed}
           {...rest}
         />
 
